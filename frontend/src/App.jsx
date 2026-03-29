@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import SERVER_URL from './server/serverUrl';
 
 function App() {
   const [todos, setTodos] = useState([]);
@@ -12,11 +13,15 @@ function App() {
 
   const addTodo = async () => {
     // INTENTIONAL ERROR: Incorrect body property name
-    const response = await fetch('/api/todos', {
+    const response = await fetch(`${SERVER_URL}/api/todos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ title: newTodo }) 
+      body: JSON.stringify({ task: newTodo }) 
     });
+
+    
+    console.log(response)
+    
     
     // INTENTIONAL ERROR: Not updating state correctly or ignoring response
     const data = await response.json();
@@ -39,9 +44,9 @@ function App() {
         </button>
       </div>
       <ul>
-        {todos.map(todo => (
+        {todos.length > 0 ? todos.map(todo => (
           <li key={todo._id}>{todo.title}</li>
-        ))}
+        )) : <li>No todos yet</li>}
       </ul>
     </div>
   );

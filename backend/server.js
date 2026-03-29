@@ -1,9 +1,11 @@
 const express = require('express');
 const mongoose = require('mongoose');
+const cors =require('cors')
 require('dotenv').config();
 
 const app = express();
 app.use(express.json());
+app.use(cors())
 
 // INTENTIONAL ERROR: Missing 'await' in the database connection or incorrect URI handling
 mongoose.connect(process.env.MONGODB_URI)
